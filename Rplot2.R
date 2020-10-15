@@ -1,0 +1,8 @@
+library(lubridate)
+house <- read.delim("household_power_consumption.txt",sep = ";")
+house$Date <- dmy(house$Date)
+house_subset <- subset(house, house$Date > "2007-01-31" & house$Date <"2007-02-03")
+house_subset$datetime2 <- paste(house_subset$Date,house_subset$Time,sep = ";")
+house_subset$Datetime4 <- strptime(house_subset$datetime2, format = "%Y-%m-%d;%H:%M:%S")
+house_subset$Global_active_power <- as.numeric(house_subset$Global_active_power)
+plot(house_subset$Datetime4,house_subset$Global_active_power,type="l")
